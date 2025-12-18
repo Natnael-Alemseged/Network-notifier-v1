@@ -13,6 +13,11 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function POST(request: Request) {
     try {
+
+        if (!process.env.JWT_SECRET) {
+            console.error("JWT_SECRET is not defined");
+            return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+        }
         const {email, password} = await request.json();
 
         // return NextResponse.json({message: "testing"}, {status: 400});
