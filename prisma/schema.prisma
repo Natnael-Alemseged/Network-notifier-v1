@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  passwordHash        String
+  name                String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  contacts            Contact[]
+  // Settings
+  theme               String    @default("dark")
+  priorityFrequencies Json? // Stores {L1: number, L2: number, L3: number}
+  // pingTemplates       String[]  @default(["Hey man, how's it going"])
+  pingTemplates       String[]  @default(["Hey man, hows it going"])
+}
+
+model Contact {
+  id                String   @id @default(uuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name              String
+  description       String?
+  lastInteraction   String?  @map("last_interaction")
+  profileLink       String?  @map("profile_link")
+  phoneNumber       String?  @map("phone_number")
+  priority          String
+  frequencyDays     Int      @map("frequency_days")
+  lastContactedDays Int      @map("last_contacted_days")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  pingTemplate      String?  @map("ping_template")
+
+  @@index([userId])
+}

@@ -1,0 +1,25 @@
+Project Architecture Rules
+
+State Management
+- Use Redux Toolkit for all client-side state
+- Every new feature must live under `src/features/<featureName>/`
+
+Feature Structure
+- For each feature, create:
+  - `<featureName>Slice.ts`
+  - `<featureName>Thunk.ts`
+- Do not place slices or thunks outside the feature folder
+
+Thunks & API
+- All async logic must live in thunks
+- Thunks must use the shared `@apiService.ts`
+- Do not call APIs directly inside components
+
+Store Registration
+- Every new slice must be registered in the central Redux store
+- Export selectors from the slice file when applicable
+
+Coding Conventions
+- Use TypeScript strictly (no `any`)
+- Use named exports
+- Follow existing folder and naming conventions

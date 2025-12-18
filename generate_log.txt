@@ -1,0 +1,16 @@
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma
+Error: Prisma schema validation - (get-config wasm)
+Error code: P1012
+error: Property not known: "adapter".
+  -->  prisma\schema.prisma:3
+   | 
+ 2 |   provider = "postgresql"
+ 3 |   adapter  = "postgresql"
+   | 
+
+Validation Error Count: 1
+[Context: getConfig]
+
+Prisma CLI Version : 7.1.0
