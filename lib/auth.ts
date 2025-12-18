@@ -6,10 +6,13 @@ import prisma from "@/lib/prisma"; // Centralized Prisma client
 
 
 // ⚠️ IMPORTANT: Set a long, secure secret in your .env file
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-if (!secret.length) {
-    throw new Error('JWT_SECRET environment variable is required and must not be empty.');
-}
+const getSecret = () => {
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+        throw new Error('JWT_SECRET environment variable is required and must not be empty.');
+    }
+    return new TextEncoder().encode(secret);
+};
 const COOKIE_NAME = "auth-token";
 
 // ----------------------------------------------------
@@ -20,7 +23,7 @@ export async function createToken(userId: string): Promise<string> {
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
         .setExpirationTime("1d")
-        .sign(secret);
+        .sign(getSecret());
 }
 
 
@@ -41,7 +44,7 @@ export function setAuthCookie(response: NextResponse, token: string) {
 // ----------------------------------------------------
 export async function verifyToken(token: string) {
     try {
-        const { payload } = await jwtVerify(token, secret);
+        const { payload } = await jwtVerify(token, getSecret());
         return payload; // Returns { userId: '...' }
     } catch (e) {
         // Log the error for debugging but throw a generic one for external consumers

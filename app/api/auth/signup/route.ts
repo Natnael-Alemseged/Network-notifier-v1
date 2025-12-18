@@ -6,6 +6,8 @@ import bcrypt from "bcryptjs";
 // Define the number of salt rounds for bcrypt
 export const SALT_ROUNDS = 10;
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(req: NextRequest) {
     try {
         const {
