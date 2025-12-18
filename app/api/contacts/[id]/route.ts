@@ -1,6 +1,8 @@
-import {NextRequest, NextResponse} from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import {getSession, getSessionFromRequest} from '@/lib/auth'
+import { getSession, getSessionFromRequest } from '@/lib/auth'
+
+export const dynamic = 'force-dynamic'
 
 export async function PUT(
     req: NextRequest,
